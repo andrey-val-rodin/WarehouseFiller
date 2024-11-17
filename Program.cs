@@ -4,6 +4,8 @@ using WarehouseFiller;
 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 var provider = new SqlProvider("../../../Components.db");
 
+var stopwatch = new System.Diagnostics.Stopwatch();
+stopwatch.Start();
 using (var stream = File.Open("../../../Components.xlsx", FileMode.Open, FileAccess.Read))
 {
     using var reader = ExcelReaderFactory.CreateReader(stream);
@@ -32,3 +34,7 @@ using (var stream = File.Open("../../../Components.xlsx", FileMode.Open, FileAcc
         }
     }
 }
+
+stopwatch.Stop();
+Console.WriteLine($"Sqlite time: {provider.Stopwatch.ElapsedMilliseconds} ms");
+Console.WriteLine($"Elapsed time: {stopwatch.ElapsedMilliseconds} ms");
